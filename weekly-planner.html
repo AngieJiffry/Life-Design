@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://127.0.0.1:5500/weekly-planner.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Week — Life Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Serif+Displayfamily=Playfair+Display:ital,wght@0,400;1,400:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --charcoal: #2C2C2C;
+    --soft-charcoal: #4A4A4A;
+    --muted: #8A8480;
+    --rule: #DDD8D0;
+    --gold: #C9A96E;
+    --career: #B8848A;
+    --health: #7A9E7E;
+    --growth: #8F9BC4;
+    --family: #C4784A;
+    --house: #9E8A78;
+    --hobbies: #A07C9E;
+    --household: #6B6B6B;
+    --household-light: #EFEFEF;
+    --rest: #9C8F8A;
+    --rest-light: #F2EDEA;
+    --career-light: #F5ECEC;
+    --health-light: #E8F0E9;
+    --growth-light: #E8EFF4;
+    --family-light: #F5EAE0;
+    --house-light: #EDE8E4;
+    --hobbies-light: #EDE5ED;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px 24px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* WEEKLY GRID */
+  .grid-wrap {
+    overflow-x: auto;
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    min-width: 900px;
+    margin-bottom: 40px;
+  }
+
+  .grid-cell {
+    background: var(--warm-white);
+    min-height: 24px;
+  }
+
+  .day-header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .day-name {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .day-type {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    opacity: 0.5;
+    margin-top: 2px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .time-cell {
+    background: var(--cream);
+    padding: 8px 6px;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    text-align: right;
+    border-right: 2px solid var(--rule);
+  }
+
+  .time-header {
+    background: var(--charcoal);
+  }
+
+  .block-cell {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+.block {
+  border-radius: 2px;
+  padding: 5px 7px;
+  font-size: 10px;
+  line-height: 1.3;
+  border-left: 2px solid transparent;
+}
+
+.large-block {
+  min-height: 75px;
+  padding: 8px 10px;
+}
+
+
+.med-block {
+  min-height: 45px;
+  padding: 8px 10px;
+}
+  .block-title {
+    font-weight: 700;
+    display: block;
+    font-size: 10px;
+  }
+
+  .block-note {
+    font-size: 9px;
+    opacity: 0.7;
+    margin-top: 1px;
+    display: block;
+  }
+
+  .b-career   { background: var(--career-light);  color: var(--career);  border-color: var(--career); }
+  .b-health   { background: var(--health-light);  color: var(--health);  border-color: var(--health); }
+  .b-growth   { background: var(--growth-light);  color: var(--growth);  border-color: var(--growth); }
+  .b-family   { background: var(--family-light);  color: var(--family);  border-color: var(--family); }
+  .b-JiffryHaus { background: var(--house-light);   color: var(--house);   border-color: var(--house); }
+  .b-hobbies  { background: var(--hobbies-light); color: var(--hobbies); border-color: var(--hobbies); }
+  .b-household { background: var(--household-light); color: var(--household); border-color: var(--household);  }
+  .b-rest     {background: var(--rest-light);      color: var(--rest);      border-color: var(--rest); }
+
+  /* PRINCIPLES */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+
+  .principle {
+    background: var(--warm-white);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .principle-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .principle-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* DAY CARDS */
+  .day-cards {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .day-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 16px;
+  }
+
+  .day-card-title {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    font-weight: 500;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .day-card-note {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+
+  .day-item {
+    font-size: 11px;
+    color: var(--soft-charcoal);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+
+  .day-item:last-child { border-bottom: none; }
+
+  .day-item-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  /* INTENTIONS */
+  .intentions {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 32px 36px;
+    margin-bottom: 40px;
+  }
+
+  .intentions h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .intentions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .intentions-col h4 {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .intentions-col ul {
+    list-style: none;
+  }
+
+  .intentions-col ul li {
+    font-size: 11.5px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    color: rgba(247,243,238,0.85);
+    display: flex;
+    gap: 8px;
+  }
+
+  .intentions-col ul li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-size: 10px;
+    margin-top: 1px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── A4  PRINT ── */
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  @media print {
+    body { background: white; -webkit-print-color-adjust: exact !important;; print-color-adjust: exact !important;; }
+
+    /* Hide non-grid sections for cleaner print */
+     .principles, .legend, .section-label, .footer { display: none; }
+
+    .page { padding: 0; max-width: none; }
+    .grid-wrap { overflow: visible; }
+
+    /* Scale grid to fit A5 landscape */
+    .week-grid {
+      min-width: unset;
+      width: 100%;
+      gap: 0.5px;
+    }
+
+    /* Shrink text for print */
+    .day-name { font-size: 7px; }
+    .day-type { font-size: 5px; }
+    .time-cell { font-size: 6px; padding: 4px 3px; }
+    .block { padding: 2px 4px; font-size: 6.5px; border-left-width: 1.5px; }
+    .block-title { font-size: 6.5px; }
+    .block-note { font-size: 5.5px; }
+    .block-cell { padding: 2px; gap: 1.5px; }
+    .day-header { padding: 6px 4px; }
+    .large-block { min-height: 36px; padding: 3px 4px; }
+    .med-block { min-height: 20px; padding: 3px 4px; }
+  }
+</style>
+<style>
+      @keyframes rotate360 {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    
+        @font-face {
+            font-family: 'Amazon Ember';
+            src: url("chrome-extension://cgdjpilhipecahhcilnafpblkieebhea/fonts/AmazonEmber_Rg.ttf");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; 
+        }
+        @font-face {
+            font-family: 'Amazon Ember';
+            src: url("chrome-extension://cgdjpilhipecahhcilnafpblkieebhea/fonts/AmazonEmber_Bd.ttf");
+            font-weight: bold;
+            font-style: normal;
+        }
+    </style></head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="eyebrow">Cycle 1 · May — July 2026</div>
+    <h1>Week by Design <em></em></h1>
+    <p class="subtitle">Sunday to Saturday · A repeating architecture for a full and intentional life · Progress = Reset to the next hour, don't wait for the perfect start</p>
+  </div>
+
+  <!-- ANCHORS -->
+  <div class="section-label">Weekly Anchors</div>
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-time">5am</div>
+      <div class="principle-label">Wake — Move · Learn</div>
+    </div>
+    <div class="principle">
+      <div class="principle-time">7pm</div>
+      <div class="principle-label">Phones off — Evening protected</div>
+    </div>
+    <div class="principle">
+      <div class="principle-time">9:30pm</div>
+      <div class="principle-label">Sleep — Non-negotiable</div>
+    </div>
+    <div class="principle">
+      <div class="principle-time">85%</div>
+      <div class="principle-label">Execution rate — Success target</div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--career-light);border:1px solid var(--career)"></div>Career</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--health-light);border:1px solid var(--health)"></div>Health &amp; Vibrancy</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--growth-light);border:1px solid var(--growth)"></div>Personal Growth</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--family-light);border:1px solid var(--family)"></div>Family</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--house-light);border:1px solid var(--house)"></div>House</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--hobbies-light);border:1px solid var(--hobbies)"></div>Hobbies</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F2F0ED;border:1px solid var(--rule)"></div>Rest / Admin</div>
+  </div>
+
+  <!-- WEEKLY GRID -->
+  <div class="section-label">Weekly Schedule</div>
+  <div class="grid-wrap">
+  <div class="week-grid">
+
+    <!-- HEADERS -->
+    <div class="grid-cell time-header"></div>
+    <div class="grid-cell day-header"><span class="day-name">Sunday</span><span class="day-type">Rest + Plan</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Monday</span><span class="day-type">Office</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Tuesday</span><span class="day-type">WFH</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Wednesday</span><span class="day-type">Office</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Thursday</span><span class="day-type">WFH</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Friday</span><span class="day-type">Office</span></div>
+    <div class="grid-cell day-header"><span class="day-name">Saturday</span><span class="day-type">Family</span></div>
+
+    <!-- 5:00–6:00 -->
+    <div class="grid-cell time-cell">5:00–5:15</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Slow Morning</span><span class="block-note">Sleep In</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Movement - Walk</span><span class="block-note">20 Mins, Brisk</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Journal &amp; Hydration</span><span class="block-note">Morning Pages &amp; Daily Preview</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Movement - Walk</span><span class="block-note">20 Mins, Brisk</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Journal &amp; Hydration<span class="block-note">Morning Pages &amp; Daily Preview</span></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Movement - Walk</span><span class="block-note">20 Mins, Brisk</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Day of Rest</span><span class="block-note">Sleep In</span></div>
+    </div>
+      <!-- 5:15–6:30 -->
+    <div class="grid-cell time-cell">5:15–6:30</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Slow Morning or Morning Pages</span><span class="block-note">Today is a Planning Day</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Morning Routine</span><span class="block-note">Hydration, Morning Pages, Meditation</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Lift: Ritual Weight Training</span><span class="block-note">Strengthen, Center, Rise</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Morning Routine</span><span class="block-note">Hydration, Morning Pages, Meditation</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Lift: Ritual Weight Training</span><span class="block-note">Strengthen, Center, Rise</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Morning Routine</span><span class="block-note">Hydration, Morning Pages, Meditation</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Rest Day</span><span class="block-note">Sleep In</span></div>
+    </div>
+
+    <!-- 6:30–7:15 -->
+    <div class="grid-cell time-cell">6:30–7:15</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Spiritual Curriculum</span><span class="block-note">Proverbs and Braiding Sweetgrass </span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Get Ready</span><span class="block-note">Shower · breakfast prep</span></div>
+       <div class="block b-household"><span class="block-title">Bed &amp; Daily Card</span><span class="block-note"></span></div>
+
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Get Ready</span><span class="block-note">Shower · breakfast prep</span></div>
+       <div class="block b-household"><span class="block-title">Bed &amp; Daily Card</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Get Ready</span><span class="block-note">shower. breakfast prep</span></div>
+       <div class="block b-household"><span class="block-title">Bed &amp; Daily Card</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Get Ready</span><span class="block-note">Shower · breakfast prep</span></div>
+       <div class="block b-household"><span class="block-title">Bed &amp; Daily Card</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+            <div class="block b-health"><span class="block-title">Get Ready</span><span class="block-note">Shower · breakfast prep</span></div>
+       <div class="block b-household"><span class="block-title">Bed &amp; Daily Card</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">Lift: Ritual Weight Training</span><span class="block-note">Strengthen, Center, Rise</span></div>
+    </div>
+
+    <!-- 7:00–9:00 -->
+    <div class="grid-cell time-cell">7:00–9:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth large-block"><span class="block-title">Meal Prep</span><span class="block-note">Weekly Lunches</span></div>
+      
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Fast Morning</span><span class="block-note">Calm · present · connected · nourished </span></div>
+      <div class="block b-career"><span class="block-title">Work - Early Start</span><span class="block-note">Leave 7:30 </span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-household"><span class="block-title">House Reset</span><span class="block-note"></span></div>
+      <div class="block b-family large-block"><span class="block-title">Boys Morning</span><span class="block-note">Double Drop Off Leaving 8am</span></div>
+     </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Work - Early Start</span><span class="block-note">Leave 7:30 </span></div>
+      <div class="block b-growth large-block
+    "><span class="block-title">Personal Curriculum</span><span class="block-note">8–9am AI study block</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family large-block"><span class="block-title">Boys Morning</span><span class="block-note">Calm · present · connected</span></div>
+        <div class="block b-household med-block"><span class="block-title">Weekly Grocery Shop</span><span class="block-note"></span></div>
+     </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Fast Morning</span><span class="block-note">Early Start 7:30</span></div>
+    <div class="block b-growth large-block
+    "><span class="block-title">Personal Curriculum</span><span class="block-note">8–9am Critical Thinking</span></div> 
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Morning</span><span class="block-note">Family Breakfast 7:30</span></div>
+      <div class="block b-family"><span class="block-title">Family Morning</span><span class="block-note">Jacob Swimming 8:30</span></div>
+      <div class="block b-family"><span class="block-title">Family Morning</span><span class="block-note">Joseph AusKick 9:00</span></div>
+    </div>
+
+    <!-- 9:00–12:00 -->
+    <div class="grid-cell time-cell">9:00–12:00</div>
+    <div class="grid-cell block-cell">
+         <div class="block b-rest"><span class="block-title">10am Spiritual Practice</span><span class="block-note">Decide at Monthly Meeting</span></div>
+         <div class="block b-family"><span class="block-title">10am Family Outing</span><span class="block-note">Museum, Zoo, Something</span></div>
+   
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Core Work</span><span class="block-note">Outputs + stakeholders</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Deep Upskill Block</span><span class="block-note">Python · Power BI · AI</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Strategic Work</span><span class="block-note">Obs→So What→Rec→Risk</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Deep Upskill Block</span><span class="block-note">Strategic Intelligence · AI · Copilot</span></div>
+      <div class="block b-career"><span class="block-title">Strategic Output</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Core Work</span><span class="block-note">Market intel · analysis</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Morning</span><span class="block-note">Joseph AusKick 9:00 - 10:30</span></div>
+      <div class="block b-JiffryHaus large-block"><span class="block-title">Renovation</span><span class="block-note">Project Focus · Critical Time</span></div>
+    </div>
+
+    <!-- 12:00–13:00 -->
+    <div class="grid-cell time-cell">12:00–12:30</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Lunch</span><span class="block-note">Whatever Works</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">prepped lunch</span><span class="block-note">use energy wisely</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">prepped Lunch</span><span class="block-note">use energy wisely</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">prepped Lunch</span><span class="block-note">use energy wisely</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">prepped Lunch</span><span class="block-note">use energy wisely</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-health"><span class="block-title">prepped Lunch</span><span class="block-note">use energy wisely</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Lunch</span><span class="block-note">Family together</span></div>
+    </div>
+     <!-- 12:30–13:00 -->
+    <div class="grid-cell time-cell">12:30–1:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Lunch</span><span class="block-note">Whatever Works</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">family admin</span><span class="block-note">kids, Amesh, Me</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-JiffryHaus"><span class="block-title">reno admin</span><span class="block-note">follow ups</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Weekly Check In<span class="block-note">12 Week Year</span></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-JiffryHaus"><span class="block-title">Plan</span><span class="block-note"> Reno Weekend Project Plan</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Weekend Planning</span><span class="block-note">Family &amp; Kids activities</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Lunch</span><span class="block-note">Family together</span></div>
+    </div>
+
+    <!-- 1:00–3:00 -->
+    <div class="grid-cell time-cell">1:00–3:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Weekend Scorecard</span><span class="block-note">Reflect·Score·Next Week</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Outputs · Weekly Cadence · Market Intelligence</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Apply learning to work</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Outputs · Emails · Follow ups </span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">4pm: Week + next week plan</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Week wrap · finish strong</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Afternoon</span><span class="block-note">Auskick · sport · culture</span></div>
+    </div>
+        <!-- 1:00–3:00 -->
+    <div class="grid-cell time-cell">3:00–4:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Afternoon</span><span class="block-note"> cooking ·crafts · playdates</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Outputs · meetings</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Kids</span><span class="block-note">Joey Kinder 4pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Outputs · meetings</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Joseph Tennis</span><span class="block-note">3:15 Leave - Podcast or Meeting Recording</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career"><span class="block-title">Core Work</span><span class="block-note">Week wrap · finish strong</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Afternoon</span><span class="block-note">library fortnightly</span></div>
+    </div>
+
+    <!-- 4:00–5:00-->
+    <div class="grid-cell time-cell">4:00–5:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Set up Next Day</span><span class="block-note">Kids · clothes · lock in schedules</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+        <div class="block b-career"><span class="block-title">Leave Work</span><span class="block-note">Hard 4:00pm Leave</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Kids</span><span class="block-note">Daycare Pickup 4:15</span></div>
+      <div class="block b-growth"><span class="block-title">Dinner Prep</span><span class="block-note">Dinner and Weds breakfast</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Wrap Up</span><span class="block-note">Update Tracking</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+        <div class="block b-family"><span class="block-title">Kids</span><span class="block-note">Daycare Pickup 4:15</span></div>
+      <div class="block b-growth"><span class="block-title">Dinner Prep</span><span class="block-note">Dinner and Weds breakfast</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large block"><span class="block-title">Wrap Up</span><span class="block-note">resolve the week · set up Matrix for Next</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Time</span><span class="block-note">Afternoon together</span></div>
+    </div>
+       <!-- 5:00–5:30 -->
+    <div class="grid-cell time-cell">5:00–5:30</div>
+    <div class="grid-cell block-cell">     
+      <div class="block b-family"><span class="block-title">Early Family Dinner</span><span class="block-note">At the Table</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+     <div class="block b-household"><span class="block-title">Reset</span><span class="block-note">+Daily Card</span></div>
+     <div class="block b-growth"><span class="block-title">Dinner Prep</span><span class="block-note">Boys Dinner</span></div>
+  
+      </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family med-block"><span class="block-title">Boys</span><span class="block-note">Joey Swimming 5:30</span></div>
+      <div class="block b-career"><span class="block-title">Plan Next Day</span><span class="block-note">While at Swimming</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family large-block"><span class="block-title">Leave Work</span><span class="block-note">5pm Sharp</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family large-block"><span class="block-title">Early Family Dinner</span><span class="block-note">At the Table</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-career large-block"><span class="block-title">Leave Work Hard 5pm</span><span class="block-note">Friday ritual begins</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Time</span><span class="block-note">Afternoon together</span></div>
+    </div>
+
+    <!-- 6:00–6:30 -->
+    <div class="grid-cell time-cell">6:00–6:30</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Evening</span><span class="block-note"> bath ·book · bed</span></div>
+      <div class="block b-household"><span class="block-title">Reset &amp; Tidy</span><span class="block-note"> </span></div>
+    </div>
+    <div class="grid-cell block-cell">
+    <div class="block b-family"><span class="block-title">Family Dinner</span><span class="block-note">Together at the table</span></div>
+     <div class="block b-growth"><span class="block-title">Next Day Prep</span><span class="block-note">Breakfast · Lunch</span></div>
+
+          
+    </div>
+    <div class="grid-cell block-cell">
+            <div class="block b-family"><span class="block-title">Family Dinner</span><span class="block-note">Together at the table</span></div>
+            <div class="block b-rest"><span class="block-title">Evening Reset</span><span class="block-note">+Daily Card</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Daily Cards</span><span class="block-note">Resolve One Thing</span></div>
+      <div class="block b-family"><span class="block-title">Family Dinner</span><span class="block-note">Together at the table</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest large-block"><span class="block-title">Weekly Chores</span><span class="block-note">reset·cards·clean spaces</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family large-block"><span class="block-title">Friday Dinner Ritual</span><span class="block-note">Pre Sports</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Family Evening</span><span class="block-note">Saturday dinner together</span></div>
+    </div>
+
+    <!-- 7:00–8:00 -->
+    <div class="grid-cell time-cell">7:00–8:00</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+      <div class="block b-growth large-block"><span class="block-title">Catch Up</span><span class="block-note">Resolve anything unresolved</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+       <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+      <div class="block b-health large-block"><span class="block-title">Yoga</span><span class="block-note">Monday evening class</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+       <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+      <div class="block b-hobbies large-block"><span class="block-title">Hobbies</span><span class="block-note">7–8pm crochet or puzzle</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+             <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+          <div class="block b-family"><span class="block-title">Wind Down and Bed Time</span><span class="block-note">Quiet Connected Play</span></div>
+             <div class="block b-growth"><span class="block-title">Evening Journal</span><span class="block-note"></span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+      <div class="block b-growth"><span class="block-title">Evening Journal</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+      <div class="block b-growth"><span class="block-title">Spiritual Curriculum</span><span class="block-note">Thurs evening — Proverbs</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+    <div class="block b-family"><span class="block-title">Phones Away</span><span class="block-note">Non Negotiable Brick</span></div>
+       <div class="block b-JiffryHaus large-block"><span class="block-title">House Planning</span><span class="block-note">8–10pm Friday reno session</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-hobbies large-block"><span class="block-title">Hobbies</span><span class="block-note">7–8pm crochet or puzzle</span></div>
+    </div>
+
+    <!-- 8:00–9:00 -->
+    <div class="grid-cell time-cell">8:00–9:00</div>
+    <div class="grid-cell block-cell">
+    <div class="block b-growth"><span class="block-title">Evening Journal</span><span class="block-note">Inentions for the Week</span></div>
+
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Journal & reading</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+         <div class="block b-growth"><span class="block-title">Journal & reading</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Journal & reading</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Journal & reading</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-JiffryHaus"><span class="block-title">House Planning</span><span class="block-note">Continues to 10pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-growth"><span class="block-title">Journal & reading</span><span class="block-note">8–8:30 · Reading 8:30–9</span></div>
+    </div>
+
+    <!-- 9:00 -->
+    <div class="grid-cell time-cell">9:00pm</div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">After 10pm house planning</span></div>
+    </div>
+    <div class="grid-cell block-cell">
+      <div class="block b-rest"><span class="block-title">Sleep</span><span class="block-note">Phones off since 7pm</span></div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- INTENTIONS STRIP -->
+  <div class="section-label">Weekly Non-Negotiables</div>
+  <div class="intentions">
+    <h3>The Things That Cannot Move</h3>
+    <div class="intentions-grid">
+      <div class="intentions-col">
+        <h4>Health &amp; Vibrancy</h4>
+        <ul>
+          <li>Gym Tues 5am · Thurs 5am · Sat 7am · Sun 7am</li>
+          <li>Yoga Monday evenings — protect this</li>
+          <li>7pm phones off — every single night</li>
+          <li>9:30pm In Bed — non-negotiable</li>
+          <li>Morning Routine Pages + TM + Hydration daily</li>
+          <li>Meal prep Sun · Tues 4pm · Thurs 4pm</li>
+        </ul>
+      </div>
+      <div class="intentions-col">
+        <h4>Growth &amp; Spirit</h4>
+        <ul>
+          <li>Personal curriculum Wed & Fri 7–9am</li>
+          <li>Spiritual curriculum Thurs evening + Sun morning</li>
+          <li>Evening journal 8–8:30pm nightly</li>
+          <li>Reading 8:30–9pm nightly</li>
+          <li>Sunday scorecard 1pm — always</li>
+          <li>Friday weekend planning 12:00-12:30</li>
+        </ul>
+      </div>
+      <div class="intentions-col">
+        <h4>Family &amp; Home</h4>
+        <ul>
+          <li>Daily Habits + Cards 6–7am and 6–7pm</li>
+          <li>Hobbies 7–8pm Tues ·  Sat</li>
+          <li>Kids library Sat fortnightly 3:15pm</li>
+          <li>House planning Fri 8–10pm</li>
+          <li>Friday family dinner — sacred</li>
+          <li>No late nights — work ends at work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    My Week · Cycle 1 · May — July 2026 · Progress over perfection · 85% execution = success
+  </div>
+
+</div>
+
+</body>
+</html>
