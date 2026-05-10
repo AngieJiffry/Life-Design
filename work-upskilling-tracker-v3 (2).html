@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Upskilling Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --charcoal: #2C2C2C;
+    --soft-charcoal: #4A4A4A;
+    --muted: #8A8480;
+    --rule: #DDD8D0;
+    --accent-gold: #C9A96E;
+    --python: #B5724A;
+    --powerbi: #6B8FA3;
+    --copilot: #7A9E7E;
+    --ai: #A07C9E;
+    --market: #2E7D6B;
+    --python-light: #F5EBE4;
+    --powerbi-light: #E8EFF4;
+    --copilot-light: #E8F0E9;
+    --ai-light: #EDE5ED;
+    --market-light: #E0F0EC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding-bottom: 50px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 50px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  h1 em { font-style: italic; color: var(--accent-gold); }
+
+  .subtitle { font-size: 13px; color: var(--muted); }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 50px;
+  }
+
+  .stat {
+    background: var(--warm-white);
+    padding: 22px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--accent-gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* STRATEGIC CONTEXT */
+  .strategy-strip {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 28px 36px;
+    margin-bottom: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+
+  .strategy-item h4 {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+  }
+
+  .strategy-item p {
+    font-size: 12px;
+    color: rgba(247,243,238,0.8);
+    line-height: 1.6;
+  }
+
+  /* SKILL TRACKS */
+  .tracks { display: flex; flex-direction: column; gap: 24px; margin-bottom: 50px; }
+
+  .track {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .track-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .track-header:hover { background: var(--cream); }
+
+  .track-priority {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+    width: 32px;
+    flex-shrink: 0;
+  }
+
+  .track-info { flex: 1; }
+
+  .track-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 2px;
+  }
+
+  .track-desc { font-size: 12px; color: var(--muted); }
+
+  .track-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .track-pct {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .mini-bar-wrap {
+    width: 80px;
+    height: 4px;
+    background: var(--cream);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1s ease;
+  }
+
+  .track-toggle {
+    font-size: 18px;
+    color: var(--muted);
+    margin-left: 8px;
+    transition: transform 0.2s;
+  }
+
+  .track.open .track-toggle { transform: rotate(180deg); }
+
+  .track-body {
+    display: none;
+    padding: 0 28px 20px;
+  }
+
+  .track.open .track-body { display: block; }
+
+  /* LESSONS */
+  .lesson-list { list-style: none; margin-top: 16px; }
+
+  .lesson-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+  }
+
+  .lesson-item:last-child { border-bottom: none; }
+
+  .lesson-check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .lesson-item.done .lesson-check { background: var(--copilot); border-color: var(--copilot); }
+  .lesson-item.done .lesson-check::after { content: '✓'; color: white; font-size: 11px; font-weight: 500; }
+  .lesson-item.done .lesson-name { text-decoration: line-through; color: var(--muted); }
+
+  .lesson-name { font-size: 13px; color: var(--charcoal); flex: 1; }
+  .lesson-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .lesson-tag {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    border: 1px solid transparent;
+  }
+
+  .tag-apply { background: var(--python-light); color: var(--python); border-color: var(--python); }
+  .tag-learn { background: var(--powerbi-light); color: var(--powerbi); border-color: var(--powerbi); }
+  .tag-project { background: var(--copilot-light); color: var(--copilot); border-color: var(--copilot); }
+  .tag-credential { background: var(--ai-light); color: var(--ai); border-color: var(--ai); }
+  .tag-visible { background: #FDF3E4; color: var(--accent-gold); border-color: var(--accent-gold); }
+
+  /* RESOURCE LINKS */
+  .resources {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .resource-link {
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid var(--rule);
+    background: var(--cream);
+    color: var(--soft-charcoal);
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .resource-link:hover { border-color: var(--charcoal); color: var(--charcoal); }
+
+  /* SESSION LOG */
+  .session-log {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 28px 32px;
+    margin-bottom: 50px;
+  }
+
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .log-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .log-add-btn {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--charcoal);
+    color: var(--cream);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 2px;
+  }
+
+  .log-form {
+    display: none;
+    background: var(--cream);
+    padding: 20px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .log-form.open { display: flex; }
+
+  .log-form input, .log-form textarea, .log-form select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+    color: var(--charcoal);
+    outline: none;
+    border-radius: 2px;
+  }
+
+  .log-form textarea { resize: vertical; min-height: 70px; }
+  .log-form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  .log-submit {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--python);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 2px;
+    align-self: flex-start;
+  }
+
+  .log-entries { list-style: none; }
+
+  .log-entry {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .log-entry:last-child { border-bottom: none; }
+
+  .log-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .log-entry-date { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .log-entry-track { font-size: 11px; font-weight: 500; }
+  .log-entry-topic { font-size: 13px; color: var(--charcoal); margin-bottom: 3px; }
+  .log-entry-note { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  .empty-log { text-align: center; padding: 30px; color: var(--muted); font-size: 13px; font-style: italic; }
+
+  /* MAY WINDOW */
+  .may-window {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent-gold);
+    padding: 28px 32px;
+    margin-bottom: 50px;
+  }
+
+  .may-window h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+  }
+
+  .may-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .may-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--cream);
+    cursor: pointer;
+  }
+
+  .may-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .may-item.done .may-check { background: var(--accent-gold); border-color: var(--accent-gold); }
+  .may-item.done .may-check::after { content: '✓'; color: white; font-size: 10px; font-weight: 500; }
+  .may-item.done .may-text { text-decoration: line-through; color: var(--muted); }
+
+  .may-text { font-size: 12.5px; color: var(--soft-charcoal); line-height: 1.5; }
+
+  /* FRAMEWORK */
+  .framework {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 36px 40px;
+    margin-bottom: 50px;
+  }
+
+  .framework h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+  }
+
+  .framework-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .framework-step {
+    background: rgba(255,255,255,0.04);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .framework-step .arrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+  }
+
+  .framework-step .step-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,243,238,0.5);
+    margin-bottom: 6px;
+  }
+
+  .framework-step .step-desc {
+    font-size: 12px;
+    color: rgba(247,243,238,0.8);
+    line-height: 1.5;
+  }
+
+  /* QUOTE */
+  .quote {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--soft-charcoal);
+    max-width: 520px;
+    margin: 0 auto 10px;
+  }
+
+  .quote span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  @media (max-width: 700px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .strategy-strip { grid-template-columns: 1fr; }
+    .may-grid { grid-template-columns: 1fr; }
+    .framework-steps { grid-template-columns: repeat(2, 1fr); }
+    .log-form-row { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+    .page { padding: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="eyebrow">Work Upskilling Tracker · Started March 2026</div>
+    <h1>Analytics Career —<br><em>Becoming Undeniable</em></h1>
+    <p class="subtitle">Tuesdays & Thursdays · 9am–12pm · Five tracks · One window · End of May.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="sessions-count">0</div>
+      <div class="stat-label">Sessions Done</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="hours-count">0</div>
+      <div class="stat-label">Hours Logged</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="skills-count">0</div>
+      <div class="stat-label">Skills Ticked Off</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="may-count">0</div>
+      <div class="stat-label">May Goals Done</div>
+    </div>
+  </div>
+
+  <!-- STRATEGIC CONTEXT -->
+  <div class="strategy-strip">
+    <div class="strategy-item">
+      <h4>The Goal</h4>
+      <p>Secure Senior Manager, Strategic & Marketplace Intelligence — BD placement, GM/MD reporting line. Be the most trusted voice in the room.</p>
+    </div>
+    <div class="strategy-item">
+      <h4>The Differentiator</h4>
+      <p>Most analysts bring data. You bring decisions. Strategic BI, executive communication, and AI-augmented insight — that combination is rare.</p>
+    </div>
+    <div class="strategy-item">
+      <h4>The Standard</h4>
+      <p>Every skill you build should produce something visible. Observation → So What → Recommendation → Risk of Inaction.</p>
+    </div>
+  </div>
+
+  <!-- SKILL TRACKS -->
+  <div class="section-label">Five Skill Tracks</div>
+  <div class="tracks">
+
+    <!-- TRACK 1: PYTHON -->
+    <div class="track open" id="track-python">
+      <div class="track-header" onclick="toggleTrack('track-python')">
+        <div class="track-priority" style="color:var(--python)">01</div>
+        <div class="track-info">
+          <div class="track-name">Python & pandas</div>
+          <div class="track-desc">Automate recurring reports · Handle large SKU datasets · Build repeatable pipelines</div>
+        </div>
+        <div class="track-meta">
+          <div class="track-pct" id="pct-python">0%</div>
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="bar-python" style="background:var(--python)"></div></div>
+        </div>
+        <div class="track-toggle">▾</div>
+      </div>
+      <div class="track-body">
+        <ul class="lesson-list" id="list-python">
+          <li class="lesson-item" data-track="python" data-id="py1" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Python basics — variables, loops, functions</div>
+              <div class="lesson-note">Kaggle Learn: Intro to Python (free, ~5hrs)</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py2" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">pandas fundamentals — DataFrames, filtering, groupby</div>
+              <div class="lesson-note">Kaggle Learn: pandas (free, ~4hrs) — this is your power tool</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py3" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Read and write Excel files with pandas (openpyxl)</div>
+              <div class="lesson-note">Replaces manual Excel manipulation — immediate work impact</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py4" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Automate your first recurring report</div>
+              <div class="lesson-note">Pick one report you run weekly — rebuild it in Python</div>
+            </div>
+            <div class="lesson-tag tag-project">Project</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py5" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Data cleaning — handling nulls, duplicates, type errors</div>
+              <div class="lesson-note">Essential for large SKU datasets</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py6" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Running market analysis in Python — challenger brand tracker</div>
+              <div class="lesson-note">On, Hoka, New Balance, Brooks vs Nike/Adidas — your signature piece</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py7" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Basic data visualisation with matplotlib / seaborn</div>
+              <div class="lesson-note">Charts that go straight into senior presentations</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+          <li class="lesson-item" data-track="python" data-id="py8" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Share Python work on GitHub — public portfolio</div>
+              <div class="lesson-note">External credential signal — links to LinkedIn</div>
+            </div>
+            <div class="lesson-tag tag-credential">Credential</div>
+          </li>
+        </ul>
+        <div class="resources">
+          <a class="resource-link" href="https://www.kaggle.com/learn/python" target="_blank">Kaggle: Python →</a>
+          <a class="resource-link" href="https://www.kaggle.com/learn/pandas" target="_blank">Kaggle: pandas →</a>
+          <a class="resource-link" href="https://github.com" target="_blank">GitHub (portfolio) →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACK 2: POWER BI -->
+    <div class="track" id="track-powerbi">
+      <div class="track-header" onclick="toggleTrack('track-powerbi')">
+        <div class="track-priority" style="color:var(--powerbi)">02</div>
+        <div class="track-info">
+          <div class="track-name">Power BI & Advanced DAX</div>
+          <div class="track-desc">Forward-looking metrics · Sell-through velocity · Early warning flags for leadership</div>
+        </div>
+        <div class="track-meta">
+          <div class="track-pct" id="pct-powerbi">0%</div>
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="bar-powerbi" style="background:var(--powerbi)"></div></div>
+        </div>
+        <div class="track-toggle">▾</div>
+      </div>
+      <div class="track-body">
+        <ul class="lesson-list" id="list-powerbi">
+          <li class="lesson-item" data-track="powerbi" data-id="pbi1" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Data modelling — star schema, relationships, cardinality</div>
+              <div class="lesson-note">Foundation of everything else in Power BI</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi2" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">DAX time intelligence — YTD, rolling 13-week, YoY variance</div>
+              <div class="lesson-note">Microsoft Learn: DAX in Power BI (free)</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi3" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">CALCULATE, FILTER, ALL — the three DAX pillars</div>
+              <div class="lesson-note">Master these and 80% of DAX problems are solved</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi4" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Sell-through velocity dashboard — apparel & footwear</div>
+              <div class="lesson-note">Build the early warning flag view leadership doesn't currently have</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi5" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Running market share dashboard — internal vs market</div>
+              <div class="lesson-note">Quantify the gap between brand mix and market direction</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi6" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Executive-ready report design — layout, tooltips, bookmarks</div>
+              <div class="lesson-note">The difference between a dashboard and a story</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="powerbi" data-id="pbi7" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Microsoft PL-300 certification (Power BI Data Analyst)</div>
+              <div class="lesson-note">Formal external credential — strong for role application</div>
+            </div>
+            <div class="lesson-tag tag-credential">Credential</div>
+          </li>
+        </ul>
+        <div class="resources">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/dax-power-bi/" target="_blank">Microsoft Learn: DAX →</a>
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/certifications/power-bi-data-analyst-associate/" target="_blank">PL-300 Certification →</a>
+          <a class="resource-link" href="https://www.sqlbi.com" target="_blank">SQLBI (advanced DAX) →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACK 3: COPILOT -->
+    <div class="track" id="track-copilot">
+      <div class="track-header" onclick="toggleTrack('track-copilot')">
+        <div class="track-priority" style="color:var(--copilot)">03</div>
+        <div class="track-info">
+          <div class="track-name">Microsoft Copilot</div>
+          <div class="track-desc">Deliberate use for analysis · Insight structuring · Output drafting · Your approved AI tool</div>
+        </div>
+        <div class="track-meta">
+          <div class="track-pct" id="pct-copilot">0%</div>
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="bar-copilot" style="background:var(--copilot)"></div></div>
+        </div>
+        <div class="track-toggle">▾</div>
+      </div>
+      <div class="track-body">
+        <ul class="lesson-list" id="list-copilot">
+          <li class="lesson-item" data-track="copilot" data-id="cop1" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Prompt engineering fundamentals — context, constraints, format</div>
+              <div class="lesson-note">The difference between mediocre and excellent AI output is in the prompt</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="copilot" data-id="cop2" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Use Copilot to structure the Observation→So What→Rec→Risk framework</div>
+              <div class="lesson-note">Apply to your next piece of work before presenting to leadership</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="copilot" data-id="cop3" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Copilot in Excel — data analysis, formula generation, summarisation</div>
+              <div class="lesson-note">Speed multiplier on your existing Excel workflows</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="copilot" data-id="cop4" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Copilot in Teams / Outlook — meeting summaries, email drafting</div>
+              <div class="lesson-note">Reclaim cognitive load for higher-order thinking</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="copilot" data-id="cop5" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Build a Copilot prompt library for recurring analytics tasks</div>
+              <div class="lesson-note">Your personal playbook — competitive advantage that compounds</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+        </ul>
+        <div class="resources">
+          <a class="resource-link" href="https://learn.microsoft.com/en-us/copilot/" target="_blank">Microsoft Copilot Learn →</a>
+          <a class="resource-link" href="https://adoption.microsoft.com/en-us/copilot/" target="_blank">Copilot Adoption Hub →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACK 4: AI & CLAUDE -->
+    <div class="track" id="track-ai">
+      <div class="track-header" onclick="toggleTrack('track-ai')">
+        <div class="track-priority" style="color:var(--ai)">04</div>
+        <div class="track-info">
+          <div class="track-name">AI & Claude — Applied to Work</div>
+          <div class="track-desc">Market intelligence · Research synthesis · Strategic output drafting · Credential building</div>
+        </div>
+        <div class="track-meta">
+          <div class="track-pct" id="pct-ai">0%</div>
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="bar-ai" style="background:var(--ai)"></div></div>
+        </div>
+        <div class="track-toggle">▾</div>
+      </div>
+      <div class="track-body">
+        <ul class="lesson-list" id="list-ai">
+          <li class="lesson-item" data-track="ai" data-id="ai1" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Complete Anthropic Academy — AI Fundamentals track</div>
+              <div class="lesson-note">Structured, self-paced, credentialled — you're already started</div>
+            </div>
+            <div class="lesson-tag tag-credential">Credential</div>
+          </li>
+          <li class="lesson-item" data-track="ai" data-id="ai2" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Use Claude for running market research synthesis</div>
+              <div class="lesson-note">Challenger brands, premiumisation trend, run club data — compiled fast</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="ai" data-id="ai3" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Draft and refine your senior leadership piece with AI assistance</div>
+              <div class="lesson-note">Use Claude to sharpen structure, anticipate counterarguments</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+          <li class="lesson-item" data-track="ai" data-id="ai4" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Learn basic API concepts — what Claude/GPT can do programmatically</div>
+              <div class="lesson-note">Connects to your Python track — powerful combination</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="ai" data-id="ai5" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Position yourself as the AI-forward analyst in the business</div>
+              <div class="lesson-note">Share one AI-assisted output that others couldn't have produced</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+        </ul>
+        <div class="resources">
+          <a class="resource-link" href="https://www.anthropic.com/academy" target="_blank">Anthropic Academy →</a>
+          <a class="resource-link" href="https://claude.ai" target="_blank">Claude →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACK 5: STRATEGIC INTELLIGENCE & EXECUTIVE PRESENCE -->
+    <div class="track" id="track-market">
+      <div class="track-header" onclick="toggleTrack('track-market')">
+        <div class="track-priority" style="color:var(--market)">05</div>
+        <div class="track-info">
+          <div class="track-name">Strategic Intelligence & Executive Presence</div>
+          <div class="track-desc">Strategic BI · AI for analytics beyond Copilot · Data storytelling · Owning the room at MD/GM level</div>
+        </div>
+        <div class="track-meta">
+          <div class="track-pct" id="pct-market">0%</div>
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="bar-market" style="background:var(--market)"></div></div>
+        </div>
+        <div class="track-toggle">▾</div>
+      </div>
+      <div class="track-body">
+
+        <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--rule)">Pillar 1 — Strategic Business Intelligence</div>
+        <ul class="lesson-list">
+          <li class="lesson-item" data-track="market" data-id="mkt1" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Learn the So What framework — from data to decision</div>
+              <div class="lesson-note">Read: Storytelling with Data (Cole Nussbaumer Knaflic) — the foundation</div>
+            </div>
+            <div class="lesson-tag tag-learn">Read</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt2" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Apply the Pyramid Principle to your next output</div>
+              <div class="lesson-note">Barbara Minto's top-down structure — conclusion first, evidence second</div>
+            </div>
+            <div class="lesson-tag tag-apply">Apply</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt3" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Business financials for analysts — P&L, margin, inventory turn</div>
+              <div class="lesson-note">Speak the language of the C-suite — connect analytics to commercial outcomes</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt4" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Deliver one insight piece structured purely as a strategic recommendation</div>
+              <div class="lesson-note">No data dump — one clear So What, one clear Rec, one clear Risk of Inaction</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+        </ul>
+
+        <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--rule)">Pillar 2 — AI for Analytics</div>
+        <ul class="lesson-list">
+          <li class="lesson-item" data-track="market" data-id="mkt5" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Advanced prompting for analytics — chain of thought, structured outputs</div>
+              <div class="lesson-note">Move beyond basic prompts to getting Claude/GPT to reason through analysis</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt6" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Claude API basics — call the API from Python for automated insight</div>
+              <div class="lesson-note">Combine your Python track with AI — automate research synthesis at scale</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt7" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Build an AI-assisted market briefing pipeline</div>
+              <div class="lesson-note">Python + Claude API — pull data, synthesise, output structured brief automatically</div>
+            </div>
+            <div class="lesson-tag tag-project">Project</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt8" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Position as the AI-forward strategist in the business</div>
+              <div class="lesson-note">Share one AI-generated output that no one else in the business could have produced</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+        </ul>
+
+        <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--rule)">Pillar 3 — Data Storytelling & Executive Communication</div>
+        <ul class="lesson-list">
+          <li class="lesson-item" data-track="market" data-id="mkt9" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Executive presentation design — one idea per slide, visual hierarchy</div>
+              <div class="lesson-note">McKinsey-style decks: fewer words, clearer thinking, stronger impact</div>
+            </div>
+            <div class="lesson-tag tag-learn">Learn</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt10" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Read: The Trusted Advisor (Maister, Green, Galford)</div>
+              <div class="lesson-note">The shift from analyst to advisor — how to be the person leadership calls first</div>
+            </div>
+            <div class="lesson-tag tag-learn">Read</div>
+          </li>
+          <li class="lesson-item" data-track="market" data-id="mkt11" onclick="toggleSkill(this)">
+            <div class="lesson-check"></div>
+            <div class="lesson-info">
+              <div class="lesson-name">Deliver a presentation to MD/GM level with no notes</div>
+              <div class="lesson-note">Own the room — know your material well enough to be in conversation, not presentation mode</div>
+            </div>
+            <div class="lesson-tag tag-visible">Visible</div>
+          </li>
+        </ul>
+
+        <div class="resources">
+          <a class="resource-link" href="https://www.storytellingwithdata.com" target="_blank">Storytelling with Data →</a>
+          <a class="resource-link" href="https://www.anthropic.com/academy" target="_blank">Anthropic Academy →</a>
+          <a class="resource-link" href="https://docs.anthropic.com/en/api/getting-started" target="_blank">Claude API Docs →</a>
+          <a class="resource-link" href="https://www.amazon.com.au/Trusted-Advisor-David-Maister/dp/0743212347" target="_blank">The Trusted Advisor →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAY WINDOW CHECKLIST -->
+  <div class="may-window">
+    <h3>⏱ The May Window — Critical Goals</h3>
+    <div class="may-grid">
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">One more high-visibility piece landed with senior / MD level</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Running market analysis completed and presented</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Direct relationship established with GM or MD</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Role conditions shaped — BD placement, right reporting line</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Python automation of at least one recurring report</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Sell-through velocity dashboard live in Power BI</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">One output delivered using Pyramid Principle — conclusion first</div>
+      </div>
+      <div class="may-item" onclick="toggleMay(this)">
+        <div class="may-check"></div>
+        <div class="may-text">Anthropic Academy AI Fundamentals certification complete</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTPUT FRAMEWORK -->
+  <div class="framework">
+    <h3>Your Signature Output Framework</h3>
+    <div class="framework-steps">
+      <div class="framework-step">
+        <div class="arrow">01</div>
+        <div class="step-label">Observation</div>
+        <div class="step-desc">What does the data actually show? Specific, quantified, sourced.</div>
+      </div>
+      <div class="framework-step">
+        <div class="arrow">02</div>
+        <div class="step-label">So What</div>
+        <div class="step-desc">Why does this matter to the business right now?</div>
+      </div>
+      <div class="framework-step">
+        <div class="arrow">03</div>
+        <div class="step-label">Recommendation</div>
+        <div class="step-desc">What should we do? Specific, actionable, owned.</div>
+      </div>
+      <div class="framework-step">
+        <div class="arrow">04</div>
+        <div class="step-label">Risk of Inaction</div>
+        <div class="step-desc">What happens if we don't act? Make the cost of doing nothing visible.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION LOG -->
+  <div class="session-log">
+    <div class="log-header">
+      <div class="log-title">Session Log</div>
+      <button class="log-add-btn" onclick="toggleForm()">+ Log Session</button>
+    </div>
+
+    <div class="log-form" id="log-form">
+      <div class="log-form-row">
+        <input type="date" id="log-date" />
+        <input type="text" id="log-duration" placeholder="Duration (e.g. 90 mins)" />
+        <select id="log-track">
+          <option value="">— Track —</option>
+          <option value="Python / pandas">Python / pandas</option>
+          <option value="Power BI & DAX">Power BI & DAX</option>
+          <option value="Microsoft Copilot">Microsoft Copilot</option>
+          <option value="AI & Claude">AI & Claude</option>
+          <option value="ANZ Market Intelligence">Strategic Intelligence & Executive Presence</option>
+        </select>
+      </div>
+      <input type="text" id="log-topic" placeholder="What did you work on?" />
+      <textarea id="log-note" placeholder="Notes, breakthroughs, questions for next session, outputs produced..."></textarea>
+      <button class="log-submit" onclick="addEntry()">Save Session</button>
+    </div>
+
+    <ul class="log-entries" id="log-entries">
+      <li class="empty-log" id="empty-log">No sessions logged yet — your first one is this Tuesday. 🔥</li>
+    </ul>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote">
+    <p>"The work you do in private is the reputation you build in public."</p>
+    <span>Work Upskilling Tracker · March 2026</span>
+  </div>
+
+</div>
+
+<script>
+  const trackCounts = { python: 8, powerbi: 7, copilot: 5, ai: 5, market: 11 };
+  let skills = JSON.parse(localStorage.getItem('work-skills') || '[]');
+  let entries = JSON.parse(localStorage.getItem('work-entries') || '[]');
+  let mayItems = JSON.parse(localStorage.getItem('work-may') || '[]');
+
+  window.onload = () => {
+    skills.forEach(id => {
+      const el = document.querySelector(`.lesson-item[data-id="${id}"]`);
+      if (el) el.classList.add('done');
+    });
+    entries.forEach(e => renderEntry(e));
+    mayItems.forEach(idx => {
+      const items = document.querySelectorAll('.may-item');
+      if (items[idx]) items[idx].classList.add('done');
+    });
+    updateStats();
+    updateAllBars();
+  };
+
+  function toggleTrack(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function toggleSkill(el) {
+    const id = el.dataset.id;
+    const track = el.dataset.track;
+    if (el.classList.contains('done')) {
+      el.classList.remove('done');
+      skills = skills.filter(s => s !== id);
+    } else {
+      el.classList.add('done');
+      skills.push(id);
+    }
+    localStorage.setItem('work-skills', JSON.stringify(skills));
+    updateStats();
+    updateBar(track);
+  }
+
+  function updateBar(track) {
+    const total = trackCounts[track];
+    const prefixMap = { python: 'py', powerbi: 'pbi', copilot: 'cop', ai: 'ai', market: 'mkt' };
+    const prefix = prefixMap[track] || track.substring(0,3);
+    const done = skills.filter(s => s.startsWith(prefix)).length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById(`bar-${track}`).style.width = pct + '%';
+    document.getElementById(`pct-${track}`).textContent = pct + '%';
+  }
+
+  function updateAllBars() {
+    setTimeout(() => {
+      Object.keys(trackCounts).forEach(t => updateBar(t));
+    }, 300);
+  }
+
+  function toggleMay(el) {
+    const items = Array.from(document.querySelectorAll('.may-item'));
+    const idx = items.indexOf(el);
+    if (el.classList.contains('done')) {
+      el.classList.remove('done');
+      mayItems = mayItems.filter(i => i !== idx);
+    } else {
+      el.classList.add('done');
+      mayItems.push(idx);
+    }
+    localStorage.setItem('work-may', JSON.stringify(mayItems));
+    updateStats();
+  }
+
+  function updateStats() {
+    document.getElementById('skills-count').textContent = skills.length;
+    document.getElementById('sessions-count').textContent = entries.length;
+    document.getElementById('may-count').textContent = mayItems.length;
+    const totalMins = entries.reduce((sum, e) => {
+      const match = (e.duration || '').match(/\d+/);
+      return sum + (match ? parseInt(match[0]) : 0);
+    }, 0);
+    document.getElementById('hours-count').textContent = (totalMins / 60).toFixed(1);
+  }
+
+  function toggleForm() {
+    const form = document.getElementById('log-form');
+    form.classList.toggle('open');
+    if (form.classList.contains('open')) {
+      document.getElementById('log-date').value = new Date().toISOString().split('T')[0];
+    }
+  }
+
+  function addEntry() {
+    const date = document.getElementById('log-date').value;
+    const duration = document.getElementById('log-duration').value;
+    const track = document.getElementById('log-track').value;
+    const topic = document.getElementById('log-topic').value;
+    const note = document.getElementById('log-note').value;
+    if (!date || !topic) return;
+
+    const entry = { date, duration, track, topic, note, id: Date.now() };
+    entries.unshift(entry);
+    localStorage.setItem('work-entries', JSON.stringify(entries));
+    renderEntry(entry, true);
+    updateStats();
+
+    document.getElementById('log-duration').value = '';
+    document.getElementById('log-track').value = '';
+    document.getElementById('log-topic').value = '';
+    document.getElementById('log-note').value = '';
+    document.getElementById('log-form').classList.remove('open');
+  }
+
+  function renderEntry(e, prepend = false) {
+    const empty = document.getElementById('empty-log');
+    if (empty) empty.remove();
+
+    const trackColors = {
+      'Python / pandas': 'var(--python)',
+      'Power BI & DAX': 'var(--powerbi)',
+      'Microsoft Copilot': 'var(--copilot)',
+      'AI & Claude': 'var(--ai)',
+      'ANZ Market Intelligence': 'var(--market)'
+    };
+
+    const li = document.createElement('li');
+    li.className = 'log-entry';
+    const d = new Date(e.date + 'T12:00:00');
+    const dateStr = d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    li.innerHTML = `
+      <div class="log-entry-header">
+        <div class="log-entry-date">${dateStr}</div>
+        <div class="log-entry-track" style="color:${trackColors[e.track] || 'var(--muted)'}">${e.track || ''}</div>
+        <div style="font-size:11px;color:var(--muted)">${e.duration || ''}</div>
+      </div>
+      <div class="log-entry-topic">${e.topic}</div>
+      ${e.note ? `<div class="log-entry-note">${e.note}</div>` : ''}
+    `;
+    const list = document.getElementById('log-entries');
+    if (prepend) list.prepend(li);
+    else list.appendChild(li);
+  }
+</script>
+</body>
+</html>

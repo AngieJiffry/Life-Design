@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12 Week Year · Cycle 1 · May–July 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --charcoal: #2C2C2C;
+    --soft: #4A4A4A;
+    --muted: #8A8480;
+    --rule: #DDD8D0;
+    --gold: #C9A96E;
+    --career: #B5724A; --career-l: #F5EBE4;
+    --health: #7A9E7E; --health-l: #E8F0E9;
+    --growth: #8F9BC4; --growth-l: #E8EFF4;
+    --family: #C4956A; --family-l: #F5EDE3;
+    --house:  #9E8A78; --house-l:  #EDE8E4;
+    --hobbies:#A07C9E; --hobbies-l:#EDE5ED;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ── LAYOUT ── */
+  .shell { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--charcoal);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 32px 0 40px;
+  }
+
+  .sidebar-logo {
+    padding: 0 24px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 24px;
+  }
+
+  .sidebar-logo .eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .sidebar-logo h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--cream);
+    font-style: italic;
+    line-height: 1.2;
+  }
+
+  .sidebar-nav { padding: 0 12px; }
+
+  .nav-section {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    padding: 0 12px;
+    margin: 20px 0 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    transition: all 0.15s;
+    text-decoration: none;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: var(--cream); }
+  .nav-item.active { background: rgba(201,169,110,0.15); color: var(--gold); }
+
+  .nav-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav-progress {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    margin-left: auto;
+  }
+
+  /* Overall progress in sidebar */
+  .sidebar-progress {
+    margin: 24px 24px 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-progress .label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 8px;
+  }
+
+  .sidebar-progress .pct {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 48px 48px 80px;
+    max-width: 960px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .page-header .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .page-header h1 em { font-style: italic; color: var(--gold); }
+
+  .page-header p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── CYCLE OVERVIEW ── */
+  .cycle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+
+  .cycle-card {
+    background: var(--warm-white);
+    padding: 20px;
+  }
+
+  .cycle-card .cycle-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cycle-card .cycle-theme {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .cycle-card .cycle-dates {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cycle-card ul { list-style: none; }
+
+  .cycle-card ul li {
+    font-size: 11px;
+    color: var(--soft);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .cycle-card ul li:last-child { border-bottom: none; }
+  .cycle-card ul li::before { content: '—'; color: var(--rule); flex-shrink: 0; }
+  .cycle-card.current { border-top: 3px solid var(--gold); }
+
+  /* ── END GOALS ── */
+  .end-goals { margin-bottom: 40px; }
+
+  .goal-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .goal-row:hover { background: var(--warm-white); }
+  .goal-row.done .goal-text { text-decoration: line-through; color: var(--muted); }
+
+  .goal-color-bar {
+    width: 4px;
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 44px;
+  }
+
+  .goal-check-wrap {
+    padding: 12px 14px;
+    flex-shrink: 0;
+  }
+
+  .goal-check {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .goal-row.done .goal-check {
+    background: var(--health);
+    border-color: var(--health);
+  }
+
+  .goal-row.done .goal-check::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .goal-text {
+    flex: 1;
+    padding: 12px 12px 12px 0;
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  /* ── WEEK SELECTOR ── */
+  .week-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .week-tab {
+    padding: 6px 14px;
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 2px;
+    color: var(--muted);
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .week-tab:hover { border-color: var(--charcoal); color: var(--charcoal); }
+  .week-tab.active { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+  .week-tab.scored { border-color: var(--health); color: var(--health); }
+  .week-tab.scored.active { background: var(--health); color: white; }
+
+  /* ── WEEK PANEL ── */
+  .week-panel { display: none; }
+  .week-panel.active { display: block; }
+
+  .week-header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 16px 20px;
+    margin-bottom: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .week-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .week-score-badge {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .week-score-badge.good { background: var(--health); border-color: var(--health); color: white; }
+
+  /* ── AREA BLOCK ── */
+  .area-block {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    border-top: none;
+    overflow: hidden;
+  }
+
+  .area-header {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .area-color {
+    width: 4px;
+    align-self: stretch;
+  }
+
+  .area-name {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .area-pct {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 10px 14px;
+  }
+
+  /* ── ACTION ITEMS ── */
+  .action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  .action-item:last-child { border-bottom: none; }
+  .action-item:hover { background: var(--cream); }
+  .action-item.done .action-text { text-decoration: line-through; color: var(--muted); }
+
+  .action-check-wrap { padding: 10px 14px; flex-shrink: 0; }
+
+  .action-check {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .action-item.done .action-check {
+    background: var(--health);
+    border-color: var(--health);
+  }
+
+  .action-item.done .action-check::after {
+    content: '✓';
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .action-text {
+    flex: 1;
+    padding: 10px 14px 10px 0;
+    font-size: 12.5px;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  /* ── SCORE INPUT ── */
+  .score-section {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 20px 24px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .score-label {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .score-input {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .score-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--rule);
+    background: var(--cream);
+    border-radius: 2px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+
+  .score-btn:hover { border-color: var(--charcoal); color: var(--charcoal); }
+  .score-btn.selected { background: var(--health); border-color: var(--health); color: white; font-weight: 500; }
+  .score-btn.low.selected { background: var(--career); border-color: var(--career); }
+
+  /* ── SCORECARD TABLE ── */
+  .scorecard-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    margin-bottom: 32px;
+    font-size: 12px;
+  }
+
+  .scorecard-table th {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+  }
+
+  .scorecard-table td {
+    border: 1px solid var(--rule);
+    padding: 8px 10px;
+    text-align: center;
+    background: var(--warm-white);
+  }
+
+  .scorecard-table td.area-td {
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    padding-left: 12px;
+    color: white;
+  }
+
+  .score-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .score-chip.good { background: var(--health-l); color: var(--health); }
+  .score-chip.low  { background: var(--career-l); color: var(--career); }
+  .score-chip.empty { color: var(--muted); }
+
+  /* ── REFLECTION ── */
+  .reflection-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+
+  .reflection-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    background: var(--warm-white);
+  }
+
+  .reflection-q {
+    padding: 14px 16px;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--muted);
+    border-right: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .reflection-a {
+    padding: 10px 14px;
+  }
+
+  .reflection-a textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--charcoal);
+    resize: none;
+    outline: none;
+    min-height: 40px;
+    line-height: 1.6;
+  }
+
+  /* ── ANCHOR STRIP ── */
+  .anchor-strip {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 20px 28px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .anchor-strip .anchor-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold);
+    font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .anchor-strip .anchor-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  .anchor-strip .anchor-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── STATS ROW ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+
+  .stat {
+    background: var(--warm-white);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="eyebrow">Cycle 1 of 4</div>
+    <h2>May — July<br>2026</h2>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section">Overview</div>
+    <a class="nav-item active" onclick="showSection('overview')">
+      <div class="nav-dot" style="background:var(--gold)"></div>
+      Dashboard
+    </a>
+    <a class="nav-item" onclick="showSection('cycles')">
+      <div class="nav-dot" style="background:var(--muted)"></div>
+      Four Cycles
+    </a>
+    <a class="nav-item" onclick="showSection('endgoals')">
+      <div class="nav-dot" style="background:var(--gold)"></div>
+      End Goals
+    </a>
+
+    <div class="nav-section">Weekly Plans</div>
+    <a class="nav-item" onclick="showSection('weeks')">
+      <div class="nav-dot" style="background:var(--career)" ></div>
+      Week by Week
+    </a>
+
+    <div class="nav-section">Track</div>
+    <a class="nav-item" onclick="showSection('scorecard')">
+      <div class="nav-dot" style="background:var(--growth)"></div>
+      Scorecard
+    </a>
+    <a class="nav-item" onclick="showSection('reflection')">
+      <div class="nav-dot" style="background:var(--hobbies)"></div>
+      End of Cycle
+    </a>
+  </div>
+
+  <div class="sidebar-progress">
+    <div class="label">Overall Progress</div>
+    <div class="pct" id="overall-pct">0%</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="overall-bar" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- ANCHOR STRIP — always visible -->
+  <div class="anchor-strip">
+    <div class="anchor-icon">"</div>
+    <div>
+      <div class="anchor-text">When something goes wrong — anchor to the next hour, not next Monday.</div>
+      <div class="anchor-sub">Progress over perfection · 85% execution = success · The foundation carries everything</div>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div class="section active" id="section-overview">
+    <div class="page-header">
+      <div class="eyebrow">The 12 Week Year · Cycle 1 · Foundation</div>
+      <h1>1 May — <em>25 July 2026</em></h1>
+      <p>Career · Health & Vibrancy · Personal Growth · Family · House · Hobbies</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" id="stat-goals">0</div>
+        <div class="stat-label">End Goals Ticked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-actions">0</div>
+        <div class="stat-label">Actions Complete</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-weeks">0</div>
+        <div class="stat-label">Weeks Scored</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-avg">—</div>
+        <div class="stat-label">Avg Weekly Score</div>
+      </div>
+    </div>
+
+    <div class="section-label">Vision Anchor</div>
+    <div style="background:var(--warm-white);border:1px solid var(--rule);padding:24px 28px;margin-bottom:32px;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--soft);line-height:1.7">
+        I am building the life I described in December. I am the most trusted analyst in the room, being elevated into the role that matches my ability. My body is strong, vibrant and well — I am becoming someone who thrives. My boys see a mother who wakes before them, moves her body, reads widely, builds things and comes home present. My home is becoming what I always imagined. The foundation I lay this cycle carries everything that comes after.
+      </p>
+    </div>
+
+    <div class="section-label">Quick Jump — End Goals</div>
+    <div id="dashboard-goals"></div>
+  </div>
+
+  <!-- ── FOUR CYCLES ── -->
+  <div class="section" id="section-cycles">
+    <div class="page-header">
+      <div class="eyebrow">The 12 Week Year</div>
+      <h1>Your Four <em>Cycles</em></h1>
+      <p>Each cycle builds on the last. You are in Cycle 1.</p>
+    </div>
+    <div class="cycle-grid">
+      <div class="cycle-card current">
+        <div class="cycle-num" style="color:var(--career)">01</div>
+        <div class="cycle-theme" style="color:var(--career)">Foundation</div>
+        <div class="cycle-dates">1 May — 25 July 2026</div>
+        <ul>
+          <li>Solid physical training and sleep foundation</li>
+          <li>Hobbies and evening wind-down bedded down</li>
+          <li>No more late nights — work time protected</li>
+          <li>DMT ready to start in Cycle 2</li>
+          <li>Goal weight trending 55–60kg with muscle</li>
+          <li>Builder in contract stage — Feb 2027 confirmed</li>
+          <li>Home cleaning routine established</li>
+        </ul>
+      </div>
+      <div class="cycle-card">
+        <div class="cycle-num" style="color:var(--health)">02</div>
+        <div class="cycle-theme" style="color:var(--health)">Protect & Establish</div>
+        <div class="cycle-dates">Aug — Oct 2026</div>
+        <ul>
+          <li>Undergoing DMT — health protected</li>
+          <li>New role secured — early value quietly</li>
+          <li>Strength training at home — immunocompromised safe</li>
+          <li>Joseph's birthday party delivered</li>
+          <li>Renovation contract active</li>
+          <li>Hobbies and personal curriculum for morale</li>
+        </ul>
+      </div>
+      <div class="cycle-card">
+        <div class="cycle-num" style="color:var(--growth)">03</div>
+        <div class="cycle-theme" style="color:var(--growth)">Transition</div>
+        <div class="cycle-dates">Nov 2026 — Jan 2027</div>
+        <ul>
+          <li>Preparing to move out for the build</li>
+          <li>Health monitored — stable through DMT</li>
+          <li>Joseph ready for school — transition supported</li>
+          <li>Family entering new era — school, community, daycare</li>
+          <li>New role more visible as health stabilises</li>
+          <li>Build commencement ready Feb 2027</li>
+        </ul>
+      </div>
+      <div class="cycle-card">
+        <div class="cycle-num" style="color:var(--house)">04</div>
+        <div class="cycle-theme" style="color:var(--house)">Build & Grow</div>
+        <div class="cycle-dates">Feb — Apr 2027</div>
+        <ul>
+          <li>Ground broken — renovation underway</li>
+          <li>New role embedded — visible contribution</li>
+          <li>Health strong — vibrancy maintained</li>
+          <li>Family settled in temporary living</li>
+          <li>Vision board life taking visible shape</li>
+          <li>Yearly family planning and goals finalised</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── END GOALS ── -->
+  <div class="section" id="section-endgoals">
+    <div class="page-header">
+      <div class="eyebrow">Cycle 1 · Foundation</div>
+      <h1>Where You Will Be by <em>25 July</em></h1>
+      <p>Tick each goal as you achieve it. These define a successful Cycle 1.</p>
+    </div>
+    <div class="section-label">End of Cycle Goals</div>
+    <div class="end-goals" id="end-goals-list"></div>
+  </div>
+
+  <!-- ── WEEKS ── -->
+  <div class="section" id="section-weeks">
+    <div class="page-header">
+      <div class="eyebrow">Cycle 1 · Execution</div>
+      <h1>Week by <em>Week</em></h1>
+      <p>Tick off actions as you complete them. Score each week on Sunday.</p>
+    </div>
+    <div class="week-tabs" id="week-tabs"></div>
+    <div id="week-panels"></div>
+  </div>
+
+  <!-- ── SCORECARD ── -->
+  <div class="section" id="section-scorecard">
+    <div class="page-header">
+      <div class="eyebrow">Cycle 1 · Tracking</div>
+      <h1>12 Week <em>Scorecard</em></h1>
+      <p>Score each week on Sunday. Target: 85% execution rate or above.</p>
+    </div>
+    <div class="section-label">Weekly Scores</div>
+    <table class="scorecard-table" id="scorecard-table"></table>
+  </div>
+
+  <!-- ── REFLECTION ── -->
+  <div class="section" id="section-reflection">
+    <div class="page-header">
+      <div class="eyebrow">Cycle 1 · 25 July 2026</div>
+      <h1>End of Cycle <em>Reflection</em></h1>
+      <p>Complete this on Sunday 25 July. Your answers carry into Cycle 2.</p>
+    </div>
+    <div class="section-label">Reflection Questions</div>
+    <div class="reflection-grid" id="reflection-grid"></div>
+    <div class="doc-footer">
+      The 12 Week Year · Cycle 1 of 4 · Foundation · 1 May — 25 July 2026<br>
+      Progress over perfection. Consistency over intensity. Show up every week.
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const COLORS = {
+  career: 'var(--career)', health: 'var(--health)', growth: 'var(--growth)',
+  family: 'var(--family)', house: 'var(--house)', hobbies: 'var(--hobbies)'
+};
+
+const endGoals = [
+  { id:'g1', color:'health',  text:'Physical training foundation locked in — 4x strength sessions per week at 85%+ execution, yoga Mondays established' },
+  { id:'g2', color:'health',  text:'Sleep and vibrancy solid — 7pm phones off, Ultrahuman Ring tracking, morning and evening journalling consistent' },
+  { id:'g3', color:'hobbies', text:'Evening wind-down bedded down — hobbies and fiction reading replacing screens, nervous system protected nightly' },
+  { id:'g4', color:'career',  text:'Work hours protected — no more late nights. Work ends at work. Every week.' },
+  { id:'g5', color:'health',  text:'DMT decision made — neurologist seen, treatment confirmed, Cycle 2 start date planned' },
+  { id:'g6', color:'health',  text:'Goal weight trending toward 55–60kg with good muscle mass — nutrition consistent, Mounjaro on track' },
+  { id:'g7', color:'house',   text:'Builder in contract stage — preferred builder selected, February 2027 ground break confirmed in writing' },
+  { id:'g8', color:'career',  text:'Career piece delivered before end of May — MD relationship deepened through genuine usefulness' },
+  { id:'g9', color:'growth',  text:'Spiritual curriculum complete — Proverbs and Braiding Sweetgrass read, two reflective journal entries written' },
+  { id:'g10',color:'family',  text:'Home cleaning and maintenance routine established and running weekly' },
+];
+
+const weeks = [
+  { num:1, dates:'1 – 8 May', areas:[
+    { name:'Career',         color:'career',  actions:['Block Tues/Thurs 9–12 in calendar for upskilling — full cycle protected','Begin Monthly Cadence/Sell Out Review — outline structure and data','Draft resume update — current role, recent wins, metrics'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Activate Ultrahuman Ring — first night of tracking tonight','Set 5am alarm — no snooze rule starts today','Set 7pm phones-off rule — protect the evening from day one'] },
+    { name:'Personal Growth', color:'growth', actions:['Set up all four journals — buy or designate notebooks today','Write May personal curriculum — what are you studying this month?','Choose May reading pair — one fiction, one non-fiction/parenting'] },
+    { name:'Family',         color:'family',  actions:['Add Auskick and sports dates to calendar for full cycle','Set up home maintenance card system — weekly tasks mapped','Plan first family outing for Week 2 or 3'] },
+    { name:'House',          color:'house',   actions:['Open Rayon — begin transferring paper floor plan to digital','Research and shortlist 5 builders to contact','Identify the one NS-stressor space to fix this cycle'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Buy crochet supplies — yarn, hook, beginner guide','7pm screens off begins — replace with crochet or puzzle tonight','Start puzzle #1'] },
+  ]},
+  { num:2, dates:'11 – 15 May', areas:[
+    { name:'Career',         color:'career',  actions:['Monthly Cadence data pull — sell-out, rate of sale, category trends','Anthropic Academy — begin AI Fundamentals Module 1','LinkedIn: refresh headline, about section, and recent experience'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions this week — schedule locked','Yoga Monday evening — first session','Morning journal: 5 of 7 mornings — even two lines counts'] },
+    { name:'Personal Growth', color:'growth', actions:['Fiction book: read 3x this week','Non-fiction: first chapters started','Commonplace journal: capture 3 ideas, quotes or observations'] },
+    { name:'Family',         color:'family',  actions:['Auskick this week — present and engaged','Library visit with boys — choose books together','Home maintenance cards: first week running — does the system work?'] },
+    { name:'House',          color:'house',   actions:['Rayon: ground floor layout complete','Contact 2 builders — send brief, request meeting','Ultrahuman: review Week 1 sleep data — what to adjust?'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: learn foundation chain — practice 20 rows','Complete puzzle #1','7pm screens off: 5 of 7 nights — note how evenings feel'] },
+  ]},
+  { num:3, dates:'18 – 22 May', areas:[
+    { name:'Career',         color:'career',  actions:['Monthly Cadence: Observation layer complete — data and trends compiled','Apply Obs→So What→Rec→Risk to Cadence first draft','Resume: achievements section updated with metrics and impact'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Book GP appointment — general health + Mounjaro review','5am: consistent — note what makes it easier or harder'] },
+    { name:'Personal Growth', color:'growth', actions:['Read 3x — both books progressing','Begin Proverbs (NRSV) — start with Bible Project introduction','Personal curriculum: complete first module or chapter'] },
+    { name:'Family',         color:'family',  actions:['Family outing #1 — cultural or nature activity','One-on-one with Joseph — his choice of activity','Library visit this week'] },
+    { name:'House',          color:'house',   actions:['GOAL: Rayon floor plan complete and shareable','Builder meeting #1 — walk through plans','Pool: contact first pool renovation company'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: single crochet mastered — first project rows started','Complete puzzle #2','Show boys what you\'re crocheting — normalise adult craft'] },
+  ]},
+  { num:4, dates:'25 – 29 May (May window closes)', areas:[
+    { name:'Career',         color:'career',  actions:['DELIVER: Monthly Cadence/Sell Out Review to senior leadership','Follow up MD post-delivery — begin AI conversation: invite her perspective','Work hours: leave on time every single day this week'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Yoga Monday evening','GOAL: 5am routine — 5 of 5 weekday mornings this week'] },
+    { name:'Personal Growth', color:'growth', actions:['Finish May fiction book','Sunday planning: May curriculum review — what did you complete?','Parenting journal: 3 observations about the boys this week'] },
+    { name:'Family',         color:'family',  actions:['Auskick this week','Church Sunday — St Leonards Uniting','GOAL: NS-stressor home fix actioned this week'] },
+    { name:'House',          color:'house',   actions:['Builder meeting #2','Finishes mood board: begin collecting kitchen and floor images','Pool: first company meeting or call'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 20 rows of first project','Complete puzzle #3','Evening wind-down: protect this — the week will be intense'] },
+  ]},
+  { num:5, dates:'1 – 5 June', areas:[
+    { name:'Career',         color:'career',  actions:['Monthly Cadence: refine and finalise — So What and Recommendation sharp','Anthropic Academy: 3 modules complete by end of week','Resume: full first draft — share with trusted person for feedback'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Evening journal: 4 of 7 evenings this week','Nutrition: batch prep Tuesday and Thursday lunches and breakfasts'] },
+    { name:'Personal Growth', color:'growth', actions:['Start June non-fiction book','Write June personal curriculum','Proverbs reading: Chapters 1–9 this week with Bible Project guide'] },
+    { name:'Family',         color:'family',  actions:['Family outing #2 — something different from Week 3','One-on-one with Jacob this week','Friday dinner — boys help cook something simple'] },
+    { name:'House',          color:'house',   actions:['Builder meeting #3 — third builder','Stone and timber samples collected for finishes board','Pool: second quote requested'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 35 rows — project one-third done','Complete puzzle #4','Family puzzle session Sunday afternoon'] },
+  ]},
+  { num:6, dates:'8 – 12 June', areas:[
+    { name:'Career',         color:'career',  actions:['GOAL: Resume and application materials complete','AI upskilling: apply advanced prompting to one work analysis this week','Role positioning: document ideal BD placement and reporting line in writing'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Yoga Monday evening','GOAL: Neurologist appointment attended — DMT decision made this week'] },
+    { name:'Personal Growth', color:'growth', actions:['Both books progressing toward end of June','GOAL: 5am routine review — 6 weeks in, what is working?','Proverbs: Chapters 10–18 with Bible Project guide'] },
+    { name:'Family',         color:'family',  actions:['Auskick this week','Church attendance','Library visit with boys'] },
+    { name:'House',          color:'house',   actions:['Builder shortlist: decision matrix comparing 3 quotes','Finishes mood board: 80% complete','Pool: third quote requested'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 50 rows — halfway','Complete puzzle #5','Evening wind-down: 6-week review — how is your sleep?'] },
+  ]},
+  { num:7, dates:'15 – 19 June', areas:[
+    { name:'Career',         color:'career',  actions:['MD relationship: share one AI-assisted output quietly — let the work speak','Power BI: begin sell-through velocity dashboard','Anthropic Academy: 5 modules complete — halfway'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Ultrahuman: 6-week sleep review — what does the data show?','Morning journal: reflect on physical progress since Week 1'] },
+    { name:'Personal Growth', color:'growth', actions:['Finish June fiction book','Reading journal: write up key insights from non-fiction','Proverbs: Chapters 19–27 — note what resonates personally'] },
+    { name:'Family',         color:'family',  actions:['Family outing #3','One-on-one with Joseph','Church — connect with another family in the community'] },
+    { name:'House',          color:'house',   actions:['GOAL: Preferred builder identified — references check begins','Kitchen layout: confirm direction with preferred builder','Pool: preferred company identified'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 65 rows — two-thirds done','Complete puzzle #6','Research birding for Cycle 2 — Merlin app downloaded'] },
+  ]},
+  { num:8, dates:'22 – 26 June', areas:[
+    { name:'Career',         color:'career',  actions:['GOAL: MD relationship — direct exchange achieved, AI conversation had','GOAL: Work upskilling curriculum — Cycle 1 tracks reviewed and updated','Power BI dashboard: first working version complete'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Yoga Monday evening','DMT: Cycle 2 start date confirmed — administration plan in place'] },
+    { name:'Personal Growth', color:'growth', actions:['Finish June non-fiction book — log in Goodreads','Write July personal curriculum','Proverbs: Chapters 28–31 — full book complete'] },
+    { name:'Family',         color:'family',  actions:['Auskick this week','Playdate for boys','Friday dinner — mark end of first two-thirds of cycle'] },
+    { name:'House',          color:'house',   actions:['GOAL: 3 builder quotes received and compared','GOAL: Finishes mood board complete','Pool: 2 quotes received'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 80 rows — nearly complete','Complete puzzle #7','Order birding binoculars ahead of Cycle 2'] },
+  ]},
+  { num:9, dates:'29 June – 3 July', areas:[
+    { name:'Career',         color:'career',  actions:['Begin next senior piece — scope and framework','Python: begin automation of first recurring report','Prompt library: document 5 reusable AI prompts for analytics work'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','5am: review 9-week data — celebrate what is working','Journal: what has shifted in your nervous system since Week 1?'] },
+    { name:'Personal Growth', color:'growth', actions:['Start July fiction book','Braiding Sweetgrass: begin reading — pair with first long-form essay','Commonplace journal: 3 entries — ideas, quotes, observations'] },
+    { name:'Family',         color:'family',  actions:['Family outing #4','Church attendance','One-on-one with Jacob this week'] },
+    { name:'House',          color:'house',   actions:['GOAL: Preferred builder selected — contract conversation begins','Begin permit research — DA or BA requirements','Pool: preferred company confirmed'] },
+    { name:'Hobbies',        color:'hobbies', actions:['GOAL: First crochet project complete — photograph it','Start second crochet project','Birding: first local walk with Merlin app'] },
+  ]},
+  { num:10, dates:'6 – 10 July', areas:[
+    { name:'Career',         color:'career',  actions:['GOAL: Anthropic Academy certificate complete — add to LinkedIn and CV','Senior piece: first draft complete — framework applied','GOAL: Python recurring report live and running'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Yoga Monday evening','Weight: monthly body composition check — trending toward goal?'] },
+    { name:'Personal Growth', color:'growth', actions:['Reading: both books on track for the month','Braiding Sweetgrass: progressing — note what connects to Proverbs','Personal curriculum: July module well underway'] },
+    { name:'Family',         color:'family',  actions:['Auskick this week','Library visit with boys','Family outing #5 — school holidays activity'] },
+    { name:'House',          color:'house',   actions:['GOAL: Builder references complete — contract review begins','Pool: contract review underway','Material lead times: research kitchen and floor ordering'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet project #2: 20 rows underway','Complete puzzle #8','Birding: second walk — start species list'] },
+  ]},
+  { num:11, dates:'13 – 17 July', areas:[
+    { name:'Career',         color:'career',  actions:['Senior piece: polish — Obs→So What→Rec→Risk sharp and clean','Power BI: executive design — tooltips, bookmarks, clean layout','Document all Cycle 1 skills built — ready for role application'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Yoga Monday evening','Journal: pre-end-of-cycle — what has shifted in your body, mind and spirit?'] },
+    { name:'Personal Growth', color:'growth', actions:['Finish July fiction book','Braiding Sweetgrass: finish — begin reflective journal entry','Write Proverbs reflective journal entry — what did it teach you, how will you live it?'] },
+    { name:'Family',         color:'family',  actions:['Church attendance','One-on-one with Joseph','Friday dinner — boys choose the menu'] },
+    { name:'House',          color:'house',   actions:['Builder: contract review — legal check if needed','GOAL: February 2027 ground break confirmed in writing this week','Pool contract: prepare to sign'] },
+    { name:'Hobbies',        color:'hobbies', actions:['Crochet: 40 rows on project #2','Complete puzzle #9','Plan Cycle 2 hobbies — birding windows in calendar'] },
+  ]},
+  { num:12, dates:'20 – 25 July (end of cycle)', areas:[
+    { name:'Career',         color:'career',  actions:['DELIVER: Second senior leadership piece','Cycle review: update work upskilling tracker — all Cycle 1 skills ticked','Write Cycle 2 career intentions — new role, new chapter'] },
+    { name:'Health & Vibrancy', color:'health', actions:['Strength: 4 sessions','Full 12-week review — Ultrahuman data, training log, weight, energy, mood','DMT: everything in place for Cycle 2 start?'] },
+    { name:'Personal Growth', color:'growth', actions:['GOAL: 6 books read this cycle — confirm Goodreads tally','GOAL: Spiritual curriculum complete — both journal entries written','Write Cycle 2 personal growth intentions — coding as personal curriculum'] },
+    { name:'Family',         color:'family',  actions:['Family outing #6 — end of cycle celebration with the boys','Church attendance','Parenting journal: end of cycle entry — who are they becoming?'] },
+    { name:'House',          color:'house',   actions:['GOAL: Builder in contract stage — February 2027 confirmed','GOAL: Pool contract signed or in final review','Write Cycle 2 house intentions — what happens August to October?'] },
+    { name:'Hobbies',        color:'hobbies', actions:['GOAL: First crochet project complete and gifted or displayed','GOAL: Birding species list started','Cycle 1 reflection: what brought the most joy? What will you protect in Cycle 2?'] },
+  ]},
+];
+
+const reflectionQs = [
+  'What was my overall execution rate this cycle?',
+  'Is physical training now a non-negotiable habit?',
+  'Is the 7pm phones-off rule holding? How is my sleep?',
+  'Is the evening wind-down replacing screens consistently?',
+  'Are all four journals active and genuinely useful?',
+  'Is the 5am routine locked in?',
+  'Did the May career window deliver what I needed?',
+  'How did the MD relationship deepen this cycle?',
+  'Is DMT ready to start in Cycle 2?',
+  'Is the builder in contract stage?',
+  'What did Proverbs and Braiding Sweetgrass teach me?',
+  'What was my biggest win of this cycle?',
+  'What do I carry into Cycle 2 — August to October?',
+  'One thing I would do differently next cycle?',
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = JSON.parse(localStorage.getItem('12wy-cycle1') || '{}');
+if (!state.goals) state.goals = {};
+if (!state.actions) state.actions = {};
+if (!state.scores) state.scores = {};
+if (!state.reflections) state.reflections = {};
+
+function save() { localStorage.setItem('12wy-cycle1', JSON.stringify(state)); }
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── BUILD UI ──────────────────────────────────────────────────────────────────
+
+function buildEndGoals(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  endGoals.forEach(g => {
+    const row = document.createElement('div');
+    row.className = 'goal-row' + (state.goals[g.id] ? ' done' : '');
+    row.innerHTML = `
+      <div class="goal-color-bar" style="background:${COLORS[g.color]}"></div>
+      <div class="goal-check-wrap"><div class="goal-check"></div></div>
+      <div class="goal-text">${g.text}</div>`;
+    row.onclick = () => {
+      state.goals[g.id] = !state.goals[g.id];
+      save(); buildEndGoals(containerId); buildEndGoals('dashboard-goals'); updateStats();
+    };
+    container.appendChild(row);
+  });
+}
+
+function buildWeeks() {
+  const tabsEl = document.getElementById('week-tabs');
+  const panelsEl = document.getElementById('week-panels');
+  tabsEl.innerHTML = '';
+  panelsEl.innerHTML = '';
+
+  weeks.forEach((w, wi) => {
+    // Count actions for this week
+    const totalActions = w.areas.reduce((s, a) => s + a.actions.length, 0);
+    const doneActions = w.areas.reduce((s, a) =>
+      s + a.actions.filter((_, ai) => state.actions[`w${w.num}-a${w.areas.indexOf(a)}-${ai}`]).length, 0);
+    const scored = state.scores[w.num] !== undefined;
+
+    const tab = document.createElement('div');
+    tab.className = 'week-tab' + (wi === 0 ? ' active' : '') + (scored ? ' scored' : '');
+    tab.textContent = `W${w.num}`;
+    tab.title = w.dates;
+    tab.onclick = () => {
+      document.querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('week-panel-' + w.num).classList.add('active');
+    };
+    tabsEl.appendChild(tab);
+
+    const panel = document.createElement('div');
+    panel.id = 'week-panel-' + w.num;
+    panel.className = 'week-panel' + (wi === 0 ? ' active' : '');
+
+    const score = state.scores[w.num];
+    const scoreBadge = score !== undefined
+      ? `<span class="week-score-badge ${score >= 85 ? 'good' : ''}">${score}%</span>`
+      : `<span class="week-score-badge">Not scored</span>`;
+
+    let html = `<div class="week-header"><h3>Week ${w.num} — ${w.dates}</h3>${scoreBadge}</div>`;
+
+    w.areas.forEach((area, ai) => {
+      const areaColor = COLORS[area.color];
+      const areaDone = area.actions.filter((_, idx) => state.actions[`w${w.num}-a${ai}-${idx}`]).length;
+      const areaPct = Math.round(areaDone / area.actions.length * 100);
+
+      html += `<div class="area-block">
+        <div class="area-header">
+          <div class="area-color" style="background:${areaColor}"></div>
+          <div class="area-name" style="color:${areaColor}">${area.name}</div>
+          <div class="area-pct">${areaDone}/${area.actions.length}</div>
+        </div>`;
+
+      area.actions.forEach((action, idx) => {
+        const key = `w${w.num}-a${ai}-${idx}`;
+        const done = state.actions[key];
+        html += `<div class="action-item${done ? ' done' : ''}" onclick="toggleAction('${key}')">
+          <div class="action-check-wrap"><div class="action-check"></div></div>
+          <div class="action-text">${action}</div>
+        </div>`;
+      });
+
+      html += `</div>`;
+    });
+
+    // Score section
+    const scores = [50, 60, 70, 75, 80, 85, 90, 95, 100];
+    html += `<div class="score-section">
+      <div class="score-label">Sunday score — what % of actions did you complete this week?</div>
+      <div class="score-input">
+        ${scores.map(s => `<button class="score-btn${state.scores[w.num] === s ? (s >= 85 ? ' selected' : ' selected low') : ''}" onclick="scoreWeek(${w.num}, ${s})">${s}%</button>`).join('')}
+      </div>
+    </div>`;
+
+    panel.innerHTML = html;
+    panelsEl.appendChild(panel);
+  });
+}
+
+function toggleAction(key) {
+  state.actions[key] = !state.actions[key];
+  save();
+  buildWeeks();
+  updateStats();
+}
+
+function scoreWeek(weekNum, score) {
+  state.scores[weekNum] = score;
+  save();
+  buildWeeks();
+  buildScorecard();
+  updateStats();
+}
+
+function buildScorecard() {
+  const table = document.getElementById('scorecard-table');
+  const areas = ['Career', 'Health & Vibrancy', 'Personal Growth', 'Family', 'House', 'Hobbies'];
+  const areaColors = [C.career, C.health, C.growth, C.family, C.house, C.hobbies];
+  const areaColorVars = ['career', 'health', 'growth', 'family', 'house', 'hobbies'];
+
+  let html = `<thead><tr><th style="text-align:left;padding-left:12px;">Area</th>`;
+  for (let w = 1; w <= 12; w++) html += `<th>W${w}</th>`;
+  html += `<th>Avg</th></tr></thead><tbody>`;
+
+  areas.forEach((area, ai) => {
+    html += `<tr><td class="area-td" style="background:${COLORS[areaColorVars[ai]]}">${area}</td>`;
+    for (let w = 1; w <= 12; w++) {
+      const s = state.scores[w];
+      if (s !== undefined) {
+        html += `<td><span class="score-chip ${s >= 85 ? 'good' : 'low'}">${s}%</span></td>`;
+      } else {
+        html += `<td><span class="score-chip empty">—</span></td>`;
+      }
+    }
+    const scoredWeeks = Object.values(state.scores);
+    const avg = scoredWeeks.length ? Math.round(scoredWeeks.reduce((a,b)=>a+b,0)/scoredWeeks.length) : null;
+    html += `<td><span class="score-chip ${avg !== null ? (avg >= 85 ? 'good' : 'low') : 'empty'}">${avg !== null ? avg + '%' : '—'}</span></td>`;
+    html += `</tr>`;
+  });
+
+  html += `</tbody>`;
+  table.innerHTML = html;
+}
+
+function buildReflection() {
+  const grid = document.getElementById('reflection-grid');
+  grid.innerHTML = '';
+  reflectionQs.forEach((q, i) => {
+    const row = document.createElement('div');
+    row.className = 'reflection-row';
+    row.innerHTML = `
+      <div class="reflection-q">${q}</div>
+      <div class="reflection-a">
+        <textarea placeholder="Write your answer here..." rows="2" onchange="saveReflection(${i}, this.value)">${state.reflections[i] || ''}</textarea>
+      </div>`;
+    grid.appendChild(row);
+  });
+}
+
+function saveReflection(i, val) {
+  state.reflections[i] = val;
+  save();
+}
+
+function updateStats() {
+  // Goals
+  const goalsDone = Object.values(state.goals).filter(Boolean).length;
+  document.getElementById('stat-goals').textContent = `${goalsDone}/${endGoals.length}`;
+
+  // Actions
+  const actionsDone = Object.values(state.actions).filter(Boolean).length;
+  const totalActions = weeks.reduce((s, w) => s + w.areas.reduce((s2, a) => s2 + a.actions.length, 0), 0);
+  document.getElementById('stat-actions').textContent = `${actionsDone}/${totalActions}`;
+
+  // Weeks scored
+  const weeksDone = Object.keys(state.scores).length;
+  document.getElementById('stat-weeks').textContent = weeksDone;
+
+  // Avg score
+  const scores = Object.values(state.scores);
+  const avg = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : null;
+  document.getElementById('stat-avg').textContent = avg !== null ? avg + '%' : '—';
+
+  // Overall progress
+  const totalItems = endGoals.length + totalActions;
+  const doneItems = goalsDone + actionsDone;
+  const pct = Math.round(doneItems / totalItems * 100);
+  document.getElementById('overall-pct').textContent = pct + '%';
+  document.getElementById('overall-bar').style.width = pct + '%';
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+buildEndGoals('end-goals-list');
+buildEndGoals('dashboard-goals');
+buildWeeks();
+buildScorecard();
+buildReflection();
+updateStats();
+</script>
+</body>
+</html>
